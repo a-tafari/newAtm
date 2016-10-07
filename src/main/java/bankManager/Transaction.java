@@ -7,19 +7,19 @@ public class Transaction {
     public enum TransType {DEPOSIT, WITHDRAWAL, TRANFER}
     private TransType type;
     private double amount;
-    private int customerID;
+    private int userID;
     private int fromAccountNumber;
     private int toAccountNumber;
 
-    public Transaction(TransType type, int customerID, int fromAccountNumber, double amount){
+    public Transaction(TransType type, int userID, int fromAccountNumber, double amount){
         this.type = type;
-        this.customerID = customerID;
+        this.userID = userID;
         this.fromAccountNumber = fromAccountNumber;
         this.amount = amount;
     }
 
-    public Transaction(int customerID, int fromAccountNumber, int toAccountNumber, double amount){
-        this.customerID = customerID;
+    public Transaction(int userID, int fromAccountNumber, int toAccountNumber, double amount){
+        this.userID = userID;
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
         this.amount = amount;
@@ -41,7 +41,7 @@ public class Transaction {
         return this.type;
     }
 
-    public int getCustomerID(){
-        return this.customerID;
+    public int getUserID(){
+        return this.userID;
     }
 }

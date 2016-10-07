@@ -3,16 +3,16 @@ package bankManager;
 /**
  * Created by abijah on 10/6/16.
  */
-public class Account {
+public class Account {//holds everything an account should have
     public enum AccountType {CHECKING, SAVINGS, BUSINESS}
     private AccountType type;
-    private double acctBalance;
+    private double balance;
     private int acctNumber;
     private double interestRate;
     private static int acctCounter = 1;
-    private int customerID;
+    private int userID;
 
-    public Account(AccountType type, double acctBalance){
+    public Account(AccountType type, double balance){
         switch (type){
             case CHECKING:
                 this.type = AccountType.CHECKING;
@@ -24,7 +24,7 @@ public class Account {
                 this.type = AccountType.BUSINESS;
         }
 
-        this.acctBalance = acctBalance;
+        this.balance = balance;
 
 
         if (AccountType.SAVINGS.equals(AccountType.SAVINGS)){
@@ -35,7 +35,7 @@ public class Account {
 
     }
 
-    public Account(AccountType type, int customerID, double acctBalance){
+    public Account(AccountType type, int userID, double acctBalance){//account constructor takes an Act type, a user id and balance
         switch (type){
             case CHECKING:
                 this.type = AccountType.CHECKING;
@@ -46,14 +46,11 @@ public class Account {
             case BUSINESS:
                 this.type = AccountType.BUSINESS;
         }
-        this.customerID = customerID;
-        this.acctBalance = acctBalance;
-        this.acctNumber = acctCounter++;
+        this.userID = userID;  // sets user ID
+        this.balance = acctBalance; //sets acct
+        this.acctNumber = acctCounter++;//increments the counter
     }
 
-    public Account(){
-
-    }
 
     public void setType(AccountType type){
         switch (type) {
@@ -80,19 +77,19 @@ public class Account {
         return interestRate;
     }
 
-    public double getAcctBalance(){
-        return acctBalance;
+    public double getBalance(){
+        return balance;
     }
 
-    public int getCustomerID(){
-        return customerID;
+    public int getUserID(){
+        return userID;
     }
 
     public void withdrawal(double amount){
-        acctBalance -= amount;
+        balance -= amount;
     }
 
     public void deposit(double amount){
-        acctBalance += amount;
+        balance += amount;
     }
 }

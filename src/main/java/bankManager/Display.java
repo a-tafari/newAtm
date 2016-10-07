@@ -26,47 +26,34 @@ public class Display {
 
 
     public void newAccountMenu(){
-        System.out.println(" ################################  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" #   [1] OPEN CHECKING ACCOUNT  #  ");
-        System.out.println(" #   [2] OPEN SAVINGS ACCOUNT   #  ");
-        System.out.println(" #   [3] OPEN BUSINESS ACCOUNT  #  ");
-        System.out.println(" #   [4] LOG OUT                #  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" ################################  ");
+
+        System.out.println(" [1] OPEN CHECKING ACCOUNT  ");
+        System.out.println(" [2] OPEN SAVINGS ACCOUNT  ");
+        System.out.println(" [3] OPEN BUSINESS ACCOUNT");
+        System.out.println(" [4] LOG OUT ");
+
     }
 
     public void printLogin(){
-        System.out.println(" ################################  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" #        ENTER ACCT ID         #  ");
-        System.out.println(" #       FOLLOWED BY YOUR       #  ");
-        System.out.println(" #          PIN NUMBER          #  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" ################################  ");
+
+        System.out.println("  ENTER ACCT INFO  ");
+
     }
 
     public void printReturningCustomerMenu(){
-        System.out.println(" ################################  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" #  [1] DEPOSIT                 #  ");
-        System.out.println(" #  [2] WITHDRAWAL              #  ");
-        System.out.println(" #  [3] TRANSFER                #  ");
-        System.out.println(" #  [4] OPEN NEW ACCOUNT        #  ");
-        System.out.println(" #  [5] CLOSE ACCOUNT           #  ");
-        System.out.println(" #  [6] VIEW TRANSACTIONS       #  ");
-        System.out.println(" #  [7] EXIT                    #  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" ################################  ");
+
+        System.out.println(" [1] DEPOSIT   ");
+        System.out.println(" [2] WITHDRAWAL  ");
+        System.out.println(" [3] TRANSFER ");
+        System.out.println(" [4] OPEN NEW ACCOUNT   ");
+        System.out.println(" [5] CLOSE ACCOUNT   ");
+        System.out.println(" [6] VIEW TRANSACTIONS   ");
+        System.out.println(" [7] EXIT        ");
     }
 
     public void printTransactionsMenu(){
-        System.out.println(" ################################  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" #    [1] VIEW TRANSACTIONS     #  ");
-        System.out.println(" #    [2] LOG OUT               #  ");
-        System.out.println(" #                              #  ");
-        System.out.println(" ################################  ");
+        System.out.println("[1] VIEW TRANSACTIONS   ");
+        System.out.println("[2] LOG OUT    ");
     }
 
 }

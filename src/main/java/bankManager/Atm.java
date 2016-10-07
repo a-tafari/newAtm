@@ -6,34 +6,34 @@ package bankManager;
 public class Atm {
 
     private Transaction transaction;
-    private Customer currentCustomer;
+    private UserInfo currentCustomer;
     private Account account;
-    private UserInputHandler userInputHandler;
+    private UserInput userInput;
     private Display display;
     private boolean isRunning;
-    private CustomerManager customerManager;
-    private AccountManager accountManager;
-    private TransactionManager transactionManager;
+    private UserManagement userManager;
+    private ManageAccount manageAccount;
+    private ManageTransaction manageTransaction;
     private int currentCustomerID;
 
 
 
-    public ATM(){
-        accountManager = new AccountManager();
-        customerManager = new CustomerManager();
+    public Atm(){
+        manageAccount = new ManageAccount();
+        userManager = new UserManagement();
         display = new Display();
         isRunning = true;
-        transactionManager = new TransactionManager();
-        userInputHandler = new UserInputHandler();
+        manageTransaction = new ManageTransaction();
+        userInput = new UserInput();
 
     }
 
-    public void createNewCustomer(){
+    public void createNewUser(){
         System.out.print("PLEASE ENTER YOUR NAME: ");
-        String userName = userInputHandler.getUserString();
+        String userName = userInput.getUserString();
         System.out.print("PLEASE CHOOSE A FOUR DIGIT PIN: ");
-        int userPin = userInputHandler.getUserInt();
-        customerManager.addCustomer(userName, userPin);
+        int userPin = userInput.getUserInt();
+        userManager.addUser(userName, userPin);
         System.out.println("ACCOUNT WAS SUCCESSFULLY CREATED: ");
         display.newAccountMenu();
         generateNewAccount();
@@ -41,38 +41,38 @@ public class Atm {
 
     public void accessCustomerAccount(){
         display.printReturningCustomerMenu();
-        int userChoice = userInputHandler.getUserInt();
+        int userChoice = userInput.getUserInt();
 
         switch (userChoice){
             case 1: // deposit
                 System.out.print("ENTER ACCOUNT NUMBER");
-                int accountNumber = userInputHandler.getUserInt();
+                int accountNumber = userInput.getUserInt();
                 System.out.print("AMOUNT TO DEPOSIT: ");
-                double depositAmount = userInputHandler.getUserDouble();
+                double depositAmount = userInput.getUserDouble();
                 deposit(currentCustomerID, accountNumber, depositAmount);
                 System.out.println("DEPOSIT OF $" + depositAmount + " WAS SUCCESSFUL!");
-                System.out.println("YOUR NEW BALANCE IS: " + accountManager.getAccount(currentCustomerID, accountNumber).getBalance());
+                System.out.println("YOUR NEW BALANCE IS: " + manageAccount.getAccount(currentCustomerID, accountNumber).getBalance());
                 display.printReturningCustomerMenu();
                 break;
             case 2: // withdrawal
                 System.out.print("ENTER ACCOUNT NUMBER");
-                int accountNumber1 = userInputHandler.getUserInt();
+                int accountNumber1 = userInput.getUserInt();
                 System.out.print("AMOUNT TO WITHDRAW: ");
-                double withdrawalAmount = userInputHandler.getUserDouble();
+                double withdrawalAmount = userInput.getUserDouble();
                 deposit(currentCustomerID, accountNumber1, withdrawalAmount);
                 System.out.print("WITHDRAWAL OF $" + withdrawalAmount + " WAS SUCCESSFUL!");
-                System.out.print("YOUR NEW BALANCE IS: " + accountManager.getAccount(currentCustomerID, accountNumber1).getBalance());
+                System.out.print("YOUR NEW BALANCE IS: " + manageAccount.getAccount(currentCustomerID, accountNumber1).getBalance());
                 display.printReturningCustomerMenu();
                 break;
             case 3: // transfer
                 System.out.print("ENTER FROM ACCOUNT NUMBER: ");
-                int fromAccountNumber = userInputHandler.getUserInt();
+                int fromAccountNumber = userInput.getUserInt();
                 System.out.print("TO ACCOUNT NUMBER: ");
-                int toAccountNumber = userInputHandler.getUserInt();
+                int toAccountNumber = userInput.getUserInt();
                 System.out.print("ENTER AMOUNT TO TRANSFER: $");
-                double amountToTransfer = userInputHandler.getUserDouble();
-                Account fromAccount = accountManager.getAccount(currentCustomerID, fromAccountNumber);
-                Account toAccount = accountManager.getAccount(currentCustomerID, toAccountNumber);
+                double amountToTransfer = userInput.getUserDouble();
+                Account fromAccount = manageAccount.getAccount(currentCustomerID, fromAccountNumber);
+                Account toAccount = manageAccount.getAccount(currentCustomerID, toAccountNumber);
                 transfer(currentCustomerID, fromAccountNumber, toAccountNumber, amountToTransfer);
                 System.out.println("TRANSFER SUCCESSFUL!");
                 System.out.println("$" + amountToTransfer + " WAS SUCCESSFULLY TRANSFERRED FROM ACCT #" + fromAccount
@@ -84,8 +84,8 @@ public class Atm {
                 break;
             case 5: // close account
                 System.out.print("PLEASE ENTER YOUR ACCOUNT NUMBER: ");
-                int closingAccountNumber = userInputHandler.getUserInt();
-                accountManager.deleteAccount(currentCustomerID,closingAccountNumber);
+                int closingAccountNumber = userInput.getUserInt();
+                manageAccount.deleteAccount(currentCustomerID,closingAccountNumber);
                 display.printReturningCustomerMenu();
                 break;
             case 6: // view transactions
@@ -108,10 +108,10 @@ public class Atm {
 
     }
 
-    public Boolean verifyLoginInfo(int customerID, int pinNumber){
-        if (customerManager.getCustomer(customerID).getCustomerID() == customerID){
-            if (customerManager.getCustomer(customerID).getPin() == pinNumber){
-                currentCustomerID = customerID;
+    public Boolean verifyLoginInfo(int userID, int pinNumber){
+        if (userManager.getUser(userID).getUserID() == userID){
+            if (userManager.getUser(userID).getPin() == pinNumber){
+                currentCustomerID = userID;
                 return true;
             }
         }
@@ -120,12 +120,12 @@ public class Atm {
     }
 
     public void withdrawal(int customerID, int accountNum, double amount){
-        Account account = accountManager.getAccount(customerID, accountNum);
+        Account account = manageAccount.getAccount(customerID, accountNum);
         account.withdrawal(amount);
     }
 
     public void deposit(int customerID, int accountNum, double amount){
-        Account account = accountManager.getAccount(customerID, accountNum);
+        Account account = manageAccount.getAccount(customerID, accountNum);
         account.deposit(amount);
     }
 
@@ -135,27 +135,27 @@ public class Atm {
 
     public void closeAccount(int customerID, int accountNumber){
         if (isAccountBalanceZero(customerID, accountNumber)) {
-            accountManager.deleteAccount(currentCustomerID, accountNumber);
+            manageAccount.deleteAccount(currentCustomerID, accountNumber);
         }
     }
 
-    public void startATM(){
+    public void startAtm(){
         while(isRunning){
             display.printWelcomeSCreen();
             display.generalMenu();
 
 
-            int userChoice = userInputHandler.getUserInt();
+            int userChoice = userInput.getUserInt();
             switch (userChoice){
                 case 1:
-                    createNewCustomer();
+                    createNewUser();
                     break;
                 case 2:
                     display.printLogin();
                     System.out.print("Please enter customer ID number: ");
-                    int returningUserAccountNumber = userInputHandler.getUserInt();
+                    int returningUserAccountNumber = userInput.getUserInt();
                     System.out.print("Please enter pin: ");
-                    int returnUserPinNumber = userInputHandler.getUserInt();
+                    int returnUserPinNumber = userInput.getUserInt();
                     if (verifyLoginInfo(returningUserAccountNumber, returnUserPinNumber)){
                         display.printReturningCustomerMenu();
                     } else {
@@ -168,33 +168,33 @@ public class Atm {
     }
 
     public Boolean isAccountBalanceZero(int customerID, int accountNumber){
-        if (accountManager.getAccount(customerID, accountNumber).getBalance() != 0 ){
+        if (manageAccount.getAccount(customerID, accountNumber).getBalance() != 0 ){
             return false;
         }
         return true;
     }
 
     public void generateNewAccount(){
-        System.out.print("PLEASE CHOOSE AN OPTION: ");
-        int userChoice = userInputHandler.getUserInt();
+        System.out.print("SELECT AN OPTION: ");
+        int userChoice = userInput.getUserInt();
         Account account = null;
         double initialDeposit;
         switch (userChoice){
             case 1:
                 initialDeposit = getInitialDeposit();
-                accountManager.addAccount(Account.AccountType.CHECKING, currentCustomerID, initialDeposit);
+                manageAccount.addAccount(Account.AccountType.CHECKING, currentCustomerID, initialDeposit);
                 System.out.println("ACCOUNT SUCCESSFULLY CREATED");
                 display.printReturningCustomerMenu();
                 break;
             case 2:
                 initialDeposit = getInitialDeposit();
-                accountManager.addAccount(Account.AccountType.SAVINGS, currentCustomerID, initialDeposit);
+                manageAccount.addAccount(Account.AccountType.SAVINGS, currentCustomerID, initialDeposit);
                 System.out.println("ACCOUNT SUCCESSFULLY CREATED");
                 display.printReturningCustomerMenu();
                 break;
             case 3:
                 initialDeposit = getInitialDeposit();
-                accountManager.addAccount(Account.AccountType.BUSINESS, currentCustomerID, initialDeposit);
+                manageAccount.addAccount(Account.AccountType.BUSINESS, currentCustomerID, initialDeposit);
                 System.out.println("ACCOUNT SUCCESSFULLY CREATED");
                 display.printReturningCustomerMenu();
                 break;
@@ -202,17 +202,15 @@ public class Atm {
     }
 
     public double getInitialDeposit(){
-        System.out.print("ENTER INITIAL DEPOSIT AMOUNT: ");
-        double deposit = userInputHandler.getUserDouble();
+        System.out.print("ENTER DEPOSIT AMOUNT: ");
+        double deposit = userInput.getUserDouble();
         return deposit;
     }
 
     public double getAccountBalance(int customerID, int accountNumber){
-        double userBalance = accountManager.getAccount(customerID, accountNumber).getBalance();
+        double userBalance = manageAccount.getAccount(customerID, accountNumber).getBalance();
         return userBalance;
     }
 
-    public void accountTypeOptions(){
 
-    }
 }

@@ -8,30 +8,30 @@ import java.util.ArrayList;
 public class ManageTransaction {
     private ArrayList<Transaction> transactionList;
 
-    public TransactionManager(){
+    public ManageTransaction(){
         transactionList = new ArrayList<Transaction>();
     }
 
-    public void addTransaction(Transaction.TransType transactionType, int customerID, int accountNumber, double amount){
-        transactionList.add(new Transaction(transactionType, customerID, accountNumber, amount));
+    public void addTransaction(Transaction.TransType transactionType, int userId, int accountNumber, double amount){
+        transactionList.add(new Transaction(transactionType, userId, accountNumber, amount));
     }
 
-    public void addTransaction( int customerID, int fromAccountNumber, int toAccountNumber, double amount){
-        transactionList.add(new Transaction(customerID, fromAccountNumber, toAccountNumber, amount));
+    public void addTransaction( int userID, int fromAccountNumber, int toAccountNumber, double amount){
+        transactionList.add(new Transaction(userID, fromAccountNumber, toAccountNumber, amount));
     }
 
-    public String printTransaction(int customerID){
+    public String printTransaction(int userID){
         for (Transaction transactions: transactionList){
-            System.out.println("CustomerID: " + transactions.getCustomerID() + " | " + "Account Number: " +
+            System.out.println("UserID: " + transactions.getUserID() + " | " + "Account Number: " +
                     transactions.getFromAccountNumber() + " | " + "Amount: " + transactions.getAmount() +
                     " | " + transactions.getTransType());
         }
         return null;
     }
 
-    public Transaction getTransaction(int customerID){
+    public Transaction getTransaction(int userID){
         for (Transaction transactions: transactionList){
-            if (transactions.getCustomerID() == customerID){
+            if (transactions.getUserID() == userID){
                 return transactions;
             }
         }
